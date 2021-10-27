@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {AuthService} from '../shared/auth.service';
+import {LoginUser} from '../shared/login-user.model';
+import {Router} from '@angular/router';
+import {take} from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +13,8 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
-  constructor() {
+  constructor(private _auth: AuthService,
+              private router: Router) {
     this.loginForm = new FormGroup({
       username: new FormControl(
         '',
@@ -30,8 +35,18 @@ export class LoginComponent implements OnInit {
 
   login() {
     if(this.loginForm.valid) {
-      let userLogin = this.loginForm.value;
+      let userLogin = this.loginForm.value as LoginUser;
       console.log('Login info', userLogin);
+      this._auth.login(userLogin)
+        .subscribe(token => {
+          console.log('trying to login')
+          if(token) {
+            this.router.navigateByUrl('pets');
+          }
+          else {
+            console.log('login failed')
+          }
+        });
     }
   }
 
