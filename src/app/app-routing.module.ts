@@ -8,6 +8,11 @@ const routes: Routes = [
       .then(m => m.AdminPetsModule)
   },
   {
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module')
+      .then(m => m.AuthModule)
+  },
+  {
     path: 'todos',
     loadChildren: () => import('./todos/todos.module')
       .then(m => m.TodosModule)
