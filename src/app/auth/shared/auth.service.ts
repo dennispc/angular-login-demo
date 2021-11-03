@@ -1,19 +1,18 @@
 import { Injectable } from '@angular/core';
 import {LoginUser} from './login-user.model';
 import {Observable, of} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {TokenDto} from './token.dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  login(user: LoginUser): Observable<string | undefined> {
-    //todo Faking REST call fix later and remember to drink lots of coffee
-    if(user.username === 'ljuul' && user.password === '123') {
-      return of('jwt-token123');
-    }
-    return of(undefined);
+  login(user: LoginUser): Observable<TokenDto> {
+    return this.http
+      .post<TokenDto>("https://localhost:5001/api/Auth", user);
   }
 }
