@@ -1,0 +1,12 @@
+.space {
+  border: 2px solid blue;
+  padding-right: 50px;
+  margin: 10px;
+  text-decoration: adjust-color($color: blue);
+  border-radius: 10%;
+}
+.space:hover{
+  text-decoration: adjust-color($color: white);
+  background-color: blue;
+}
+
